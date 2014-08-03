@@ -4,12 +4,31 @@ require 'minitest/pride'
 require_relative '../lib/sequence'
 
 class SequenceTest < Minitest::Test
-  def test_that_it_generates_a_random_four_letter_sequence
-    letters = ["r", "y", "g", "b"]
+  attr_reader :sequence, :random_sequence
 
-    random_sequences = letters.map do |sequence|
-      sequence.random
+  def setup
+    @sequence = Sequence.new
+    @random_sequence = sequence.generate_sequence(["r", "b", "g", "y"])
+  end
+
+  def test_it_generates_an_array
+    assert_equal Array, random_sequence.class
+  end
+
+  def test_it_generates_a_four_letter_array
+    assert_equal 4, random_sequence.length
+  end
+
+  def test_it_generates_sequences_that_are_actually_random
+    10.times do
+      base_result = random_sequence
+      new_result = sequence.generate_sequence(["r", "b", "g", "y"])
+      refute_equal base_result, new_result
     end
-    assert_equal ["b" "y" "r" "g"], random
+  end
+
+  def test_it_generates_sequence_with_only_letters_from_pool
+    pool = ["r", "b", "g", "y"]
+    assert random_sequence.all? { |letter| pool.include? letter }    
   end
 end
