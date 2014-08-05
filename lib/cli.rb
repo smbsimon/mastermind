@@ -50,7 +50,6 @@ class CLI
       else
         puts "You have no matches."
         end
-      end
     end
   end
 
