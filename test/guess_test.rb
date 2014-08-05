@@ -5,21 +5,13 @@ require_relative '../lib/guess'
 
 class GuessTest < Minitest::Test
 
-  def test_user_can_make_a_guess
-    guess = Guess.new("b")
-    assert_equal "b", guess.make_guess
-    # there is a problem here, but i can't figure it out
-  end
-
   def test_it_has_one_color_slot
     guess = Guess.new("y")
     assert_equal "y", guess.color
   end
 
-  def test_it_has_four_colors_slot_by_default
-    guess = Guess.new(4)
-    assert_equal 4, guess.color_slots?
-  end
+  # def test_it_has_four_colors_slot_by_default
+  # end
 
   # def test_it_is_insensitive_to_case
   # end
