@@ -12,5 +12,5 @@ class SequenceMatcherTest < Minitest::Test
     @sequence = SequenceGenerator.new(@colors)
     @random_sequence = sequence.create(4)
   end
-  
+
 end

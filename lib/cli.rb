@@ -1,15 +1,19 @@
+require_relative 'messages'
+
 class CLI
-  attr_reader :command, :guess, :secret_code
+  attr_reader :command, :guess, :secret_code, :messages
+  attr_accessor :turn_counter
 
   def initialize
     @command = ""
     @turn_counter = 0
+    @messages = Messages.new
   end
 
   def start
-    puts "Welcome to Mastermind. Would you like to (p)lay, read the (i)nstructions, or (q)uit?"
+    messages.welcome_message
     until quit?
-      print "Enter your command: "
+      messages.enter_command
       @command = gets.strip
       process_input
     end
@@ -20,45 +24,50 @@ class CLI
     when playing?
       play_game
     when instructions?
-      puts "Guess the four-character mystery sequence composed of the colors red, green, blue, and yellow. Colors can be repeated. A partial match is one with a color that's used in the sequence but guessed in the wrong position. A total match correctly guesses the color and the placement. Your challenge is to get four total matches."
+      messages.instruction_message
     when quit?
-      puts "Thanks for playing."
+      messages.quit_message
     when sara?
-      puts "S is for Sara."
+      messages.sara
     else
-      puts "Invalid command. Try again."
+      messages.invalid_message
     end
   end
 
   def play_game
-    puts "The mystery sequence contains four characters made up of (r)ed, (g)reen, (b)lue, and (y)ellow. Colors can be repeated."
+    messages.play_game_message
     sequence_generator = SequenceGenerator.new(%w[r b g y])
     @secret_code       = sequence_generator.create(4)
     # puts secret_code.inspect
     until win?
-      print "Enter your guess: "
+      messages.enter_guess
       @guess = gets.strip.split("")
       @turn_counter += 1
 
       case
+      when quit_game?
+        messages.quit_game_message
+        exit
+      when invalid_characters?
+        messages.invalid_guess
       when win?
-        puts "\n\ You win! It took you #{@turn_counter} guesses.\n\ "
+        messages.win_message
       when full_match?
-        puts "\n\ You have #{number_of_full_matches} full match(es) and #{number_of_partial_matches} partial match(es). You've taken #{@turn_counter} guess(es). \n\ "
+        messages.full_match_message(number_of_full_matches, number_of_partial_matches, turn_counter)
       when partial_match?
-        puts "\n\ You have 0 full match(es) and #{number_of_partial_matches} partial match(es). You've taken #{@turn_counter} guess(es). \n\ "
+        messages.partial_match_message(number_of_full_matches, number_of_partial_matches, turn_counter)
       else
-        puts "You have no matches."
-        end
+        messages.no_match_message(turn_counter)
+      end
     end
-  end
-
-  def partial_match?
-    number_of_partial_matches > 0
   end
 
   def full_match?
     number_of_full_matches > 0
+  end
+
+  def partial_match?
+    number_of_partial_matches > 0
   end
 
   def number_of_full_matches
@@ -80,6 +89,10 @@ class CLI
     end.count { |element| element == true }
   end
 
+  def invalid_characters?
+    @guess.any? {|letter| letter =~ /[^rbgy]/}
+  end
+
   def win?
     guess == secret_code
   end
@@ -98,5 +111,9 @@ class CLI
 
   def quit?
     command == "q" || command == "quit"
+  end
+
+  def quit_game?
+    guess == ["q"] || guess == ["q","u","i","t"]
   end
 end
