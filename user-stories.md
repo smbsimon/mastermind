@@ -56,4 +56,3 @@
 * Timer
 * High scores
 * Multi-level gameplay
-* Make sure turn counter starts over when user decides to play again (<-- fix this soon, sara!)
