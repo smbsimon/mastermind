@@ -113,19 +113,19 @@ private
   end
 
   def playing?
-    command == "p" || command == "play"
+    command == "p" || command == "P"
   end
 
   def instructions?
-    command == "i" || command == "instructions"
+    command == "i" || command == "I"
   end
 
   def sara?
-    command == "s"
+    command == "s" || command == "S"
   end
 
   def quit?
-    command == "q" || command == "quit"
+    command == "q" || command == "Q"
   end
 
   def quit_game?
