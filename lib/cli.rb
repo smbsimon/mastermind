@@ -19,6 +19,8 @@ class CLI
     end
   end
 
+private
+
   def process_input
     case
     when playing?
@@ -36,8 +38,7 @@ class CLI
 
   def play_game
     messages.play_game_message
-    sequence_generator = SequenceGenerator.new(%w[r b g y])
-    @secret_code       = sequence_generator.create(4)
+    @secret_code = SequenceGenerator.new(%w[r b g y]).create(4)
     # puts secret_code.inspect
     until win?
       messages.enter_guess
@@ -46,18 +47,18 @@ class CLI
 
       case
       when quit_game?
-        messages.quit_game_message
+        messages.quit_message
         exit
       when invalid_characters?
         messages.invalid_guess
       when win?
-        messages.win_message
+        messages.win_message(turn_counter)
       when full_match?
-        messages.full_match_message(number_of_full_matches, number_of_partial_matches, turn_counter)
+        messages.full_match(number_of_full_matches, number_of_partial_matches, turn_counter)
       when partial_match?
-        messages.partial_match_message(number_of_full_matches, number_of_partial_matches, turn_counter)
+        messages.partial_match(number_of_full_matches, number_of_partial_matches, turn_counter)
       else
-        messages.no_match_message(turn_counter)
+        messages.no_match(turn_counter)
       end
     end
   end

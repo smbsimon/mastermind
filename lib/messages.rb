@@ -1,7 +1,14 @@
+require "colorize"
+
 class Messages
 
   def welcome_message
-    puts "Welcome to Mastermind. Would you like to (p)lay, read the (i)nstructions, or (q)uit?"
+    puts "
++-+-+-+-+-+-+-+ +-+-+ +-+-+-+-+-+-+-+-+-+-+
+|W|e|l|c|o|m|e| |t|o| |M|a|s|t|e|r|m|i|n|d|
++-+-+-+-+-+-+-+ +-+-+ +-+-+-+-+-+-+-+-+-+-+
+
+Would you like to read the (i)nstructions, (p)lay, or (q)uit?\n "
   end
 
   def enter_command
@@ -9,52 +16,46 @@ class Messages
   end
 
   def instruction_message
-    puts "Guess the four-character mystery sequence composed of the colors red, green, blue, and yellow. Colors can be repeated. A partial match is one with a color that's used in the sequence but guessed in the wrong position. A total match correctly guesses the color and the placement. Your challenge is to get four total matches."
+    puts "\n* The game has created a four-character mystery sequence composed of the colors #{"(r)ed".colorize(:red)}, #{"(g)reen".colorize(:green)}, #{"(b)lue".colorize(:blue)}, and/or #{"(y)ellow".colorize(:yellow)}.\n* Colors can be repeated.\n* A partial match happens when you guess a color that is used in the mystery sequence but guessed in the wrong position.\n* A total match means that you have correctly guessed both the color and the position.\n* Your challenge is to get four total matches.\n\nReady to (p)lay?\n "
   end
 
   def quit_message
-    puts "Thanks for playing."
+    puts "\nThanks for playing!\n "
   end
 
   def sara
-    puts "S is for Sara. The best. The best!"
+    puts "\nS is for Sara. The best. The best!\n "
   end
 
   def invalid_message
-    puts "Invalid command. Try again."
+    puts "\nOops! Invalid command. Please try again.\n "
   end
 
   def play_game_message
-    puts "The mystery sequence contains four characters made up of (r)ed, (g)reen, (b)lue, and (y)ellow. Colors can be repeated."
+    puts "\nThe four-character mystery sequence is made up of #{"(r)ed".colorize(:red)}, #{"(g)reen".colorize(:green)}, #{"(b)lue".colorize(:blue)}, and/or #{"(y)ellow".colorize(:yellow)}. Colors can be repeated. What's your first guess?\n "
   end
 
   def enter_guess
     print "Enter your guess: "
   end
 
-  def win_message
-    puts "\n\ You win! It took you #{turn_counter} guesses.\n\ "
+  def win_message(turn_counter)
+    puts "\nYou win! It took you #{turn_counter} guesses. Would you like to (p)lay again or (q)uit?\n "
   end
 
-  def full_match_message(number_of_full_matches, number_of_partial_matches, turn_counter)
-    puts "\n\ You have #{number_of_full_matches} full match(es) and #{number_of_partial_matches} partial match(es). You've taken #{turn_counter} guess(es). \n\ "
+  def full_match(number_of_full_matches, number_of_partial_matches, turn_counter)
+    puts "\nYou have #{number_of_full_matches} full match(es) and #{number_of_partial_matches} partial match(es). You've taken #{turn_counter} guess(es).\n "
   end
 
-  def partial_match_message(number_of_full_matches, number_of_partial_matches, turn_counter)
-    puts "\n\ You have 0 full match(es) and #{number_of_partial_matches} partial match(es). You've taken #{turn_counter} guess(es). \n\ "
+  def partial_match(number_of_full_matches, number_of_partial_matches, turn_counter)
+    puts "\nYou have 0 full match(es) and #{number_of_partial_matches} partial match(es). You've taken #{turn_counter} guess(es).\n "
   end
 
-  def no_match_message(turn_counter)
-    puts "\n\ You have no matches. You've taken #{turn_counter} guess(es). \n\ "
+  def no_match(turn_counter)
+    puts "\nYou have no matches. You've taken #{turn_counter} guess(es).\n "
   end
 
   def invalid_guess
-    puts "\n\ You can only use the letters r, b, g, and y. Please try again. \n\ "
+    puts "\nOops! You can only use the lowercase letters for #{"(r)ed".colorize(:red)}, #{"(g)reen".colorize(:green)}, #{"(b)lue".colorize(:blue)}, and #{"(y)ellow".colorize(:yellow)}. Please try again.\n "
   end
-
-  def quit_game_message
-    puts "\n\ Thanks for playing! \n\ "
-  end
-
-
 end
