@@ -56,7 +56,7 @@ Would you like to read the (i)nstructions, (p)lay, or (q)uit?\n "
   end
 
   def invalid_guess_characters
-    puts "\nOops! You can only use the lowercase letters for #{"(r)ed".colorize(:red)}, #{"(g)reen".colorize(:green)}, #{"(b)lue".colorize(:blue)}, and #{"(y)ellow".colorize(:yellow)}. Please try again.\n "
+    puts "\nOops! You can only use the letters for #{"(r)ed".colorize(:red)}, #{"(g)reen".colorize(:green)}, #{"(b)lue".colorize(:blue)}, and #{"(y)ellow".colorize(:yellow)}. Please try again.\n "
   end
 
   def guess_too_short
