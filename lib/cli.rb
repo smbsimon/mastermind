@@ -40,10 +40,11 @@ private
     messages.play_game_message
     @secret_code = SequenceGenerator.new(%w[r b g y]).create(4)
     @turn_counter = 0
-    # puts secret_code.inspect
+    puts secret_code.inspect
     until win?
       messages.enter_guess
-      @guess = gets.strip.split("")
+      @guess = gets.strip
+      @guess = guess.downcase.split(//)
       @turn_counter += 1
 
       case
