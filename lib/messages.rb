@@ -39,8 +39,8 @@ Would you like to read the (i)nstructions, (p)lay, or (q)uit?\n "
     print "Enter your guess: "
   end
 
-  def win_message(turn_counter)
-    puts "\nYou win! It took you #{turn_counter} guesses. Would you like to (p)lay again or (q)uit?\n "
+  def win_message(turn_counter, minutes, seconds)
+    puts "\nYou win! It took you #{turn_counter} guesses. It took you #{minutes} minute(s) and #{seconds} second(s). Would you like to (p)lay again or (q)uit?\n "
   end
 
   def full_match(number_of_full_matches, number_of_partial_matches, turn_counter)
