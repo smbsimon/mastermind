@@ -1,7 +1,7 @@
 require_relative 'messages'
 
 class CLI
-  attr_reader :command, :guess, :secret_code, :messages
+  attr_reader :command, :guess, :secret_code, :messages, :start_time, :end_time
   attr_accessor :turn_counter
 
   def initialize
@@ -39,6 +39,7 @@ private
   def play_game
     messages.play_game_message
     @secret_code = SequenceGenerator.new(%w[r b g y]).create(4)
+    @start_time = Time.new
     @turn_counter = 0
     # puts secret_code.inspect
     until win?
@@ -46,7 +47,6 @@ private
       @guess = gets.strip
       @guess = guess.downcase.split(//)
       @turn_counter += 1
-
       case
       when quit_game?
         messages.quit_message
@@ -58,7 +58,8 @@ private
       when guess_length_too_short?
         messages.guess_too_short
       when win?
-        messages.win_message(turn_counter)
+        @end_time = Time.new
+        messages.win_message(turn_counter, calculate_minutes, calculate_seconds)
       when full_match?
         messages.full_match(number_of_full_matches, number_of_partial_matches, turn_counter)
       when partial_match?
@@ -67,6 +68,14 @@ private
         messages.no_match(turn_counter)
       end
     end
+  end
+
+  def calculate_minutes
+    (end_time - start_time).round / 60
+  end
+
+  def calculate_seconds
+    (end_time - start_time).round % 60
   end
 
   def full_match?
