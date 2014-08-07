@@ -39,6 +39,7 @@ private
   def play_game
     messages.play_game_message
     @secret_code = SequenceGenerator.new(%w[r b g y]).create(4)
+    @turn_counter = 0
     # puts secret_code.inspect
     until win?
       messages.enter_guess
@@ -50,7 +51,11 @@ private
         messages.quit_message
         exit
       when invalid_characters?
-        messages.invalid_guess
+          messages.invalid_guess_characters
+      when guess_length_too_long?
+        messages.guess_too_long
+      when guess_length_too_short?
+        messages.guess_too_short
       when win?
         messages.win_message(turn_counter)
       when full_match?
@@ -92,6 +97,14 @@ private
 
   def invalid_characters?
     @guess.any? {|letter| letter =~ /[^rbgy]/}
+  end
+
+  def guess_length_too_long?
+    @guess.length > 4
+  end
+
+  def guess_length_too_short?
+    @guess.length < 4
   end
 
   def win?

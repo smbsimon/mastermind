@@ -55,7 +55,16 @@ Would you like to read the (i)nstructions, (p)lay, or (q)uit?\n "
     puts "\nYou have no matches. You've taken #{turn_counter} guess(es).\n "
   end
 
-  def invalid_guess
+  def invalid_guess_characters
     puts "\nOops! You can only use the lowercase letters for #{"(r)ed".colorize(:red)}, #{"(g)reen".colorize(:green)}, #{"(b)lue".colorize(:blue)}, and #{"(y)ellow".colorize(:yellow)}. Please try again.\n "
   end
+
+  def guess_too_short
+    puts "\nThe length is too short. It must be four characters.\n "
+  end
+
+  def guess_too_long
+    puts "\nThe length is too long. It must be four characters.\n "
+  end
+
 end
